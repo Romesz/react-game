@@ -5,7 +5,8 @@
   "author": "Romano Firtermaiszter <firtermaiszter.romano@gmail.com>",
   "main": "app.js",
   "scripts": {
-    "serve": "node app.js"
+    "serve": "node serve.js",
+    "build": "node babel.js"
   },
   "repository": {
     "type": "git",

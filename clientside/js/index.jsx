@@ -6,6 +6,7 @@ let gameHeight = window.innerHeight;
 let gameWidth = window.innerWidth;
 let heroHeight = 50;
 let weaponFireState = false;
+let velocity = 10;
 
 const initalGameWidth = gameWidth;
 
@@ -119,22 +120,13 @@ class GameComponent extends React.Component {
     let evils = document.querySelectorAll('.evils');
     let weapon = document.querySelector('.weapon');
 
-    // needs to be deleted
-    if(document.querySelector('.game') !== null) {
-      //this.loadingScreen = React.render(React.createElement(Evils));
-      // http://stackoverflow.com/questions/29017485/call-method-on-es6-class-instance-of-react-component
-      //let game = document.querySelector('.game');
-      //let newD = document.createElement('<Evils />');
-      //game.appendChild(newD);
-    }
-
     /**
     * Setting the weapon stuffs
     **/
     if(weaponFireState === true) {
       let weaponBottom = parseInt(weapon.style.bottom);
       if(weaponBottom < gameHeight) {
-        weaponBottom++;
+        weaponBottom += velocity;
         weapon.style.bottom = weaponBottom + 'px';
       } else {
         weapon.style.bottom = heroHeight + 'px';
@@ -154,12 +146,12 @@ class GameComponent extends React.Component {
         if(evilLeft >= initalGameWidth - 100) {
           gameWidth = 0;
         }
-        evilLeft++;
+        evilLeft += (velocity - 5);
       } else {
         if(evilLeft <= 10) {
           gameWidth = initalGameWidth - 50;
         }
-        evilLeft--;
+        evilLeft -= (velocity - 5);
       }
       evil.style.left = evilLeft + 'px';
 
@@ -188,6 +180,16 @@ class GameComponent extends React.Component {
     }
   }
   handleKeyboard(event) {
+
+    // needs to be deleted
+    if(document.querySelector('.game') !== null) {
+      //React.render(React.createElement(Hero, {}), document.getElementsByClassName('game')[0]);
+      // http://stackoverflow.com/questions/29017485/call-method-on-es6-class-instance-of-react-component
+      //let game = document.querySelector('.game');
+      //let newD = document.createElement('<Evils />');
+      //game.appendChild(newD);
+    }
+
     let keyCode = event.which;
     switch(keyCode) {
       case 37:
@@ -204,7 +206,6 @@ class GameComponent extends React.Component {
   heroMovement(direction) {
     let hero = document.querySelector('.hero');
     let heroLeft = hero.offsetLeft;
-    let velocity = 10;
     if(direction === 'left') {
       if(heroLeft <= 0)
         return;
